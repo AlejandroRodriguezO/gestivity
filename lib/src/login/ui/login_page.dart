@@ -1,7 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gestivity/src/global/widgets/text_input.dart';
 import 'package:gestivity/src/home/ui/home_page.dart';
 import 'package:gestivity/src/login/controller/login_controller.dart';
+import 'package:gestivity/src/register/ui/register_page.dart';
 import 'package:gestivity/src/utils/app_colors.dart';
 import 'package:provider/provider.dart';
 
@@ -27,42 +29,36 @@ class LoginPage extends StatelessWidget {
               ),
               child: Column(
                 children: [
-                  Consumer<LoginProvider>(
-                    builder: (context, bloc, child) => GestureDetector(
-                      onTap: () {
-                        if (bloc.numAvatar == 8) {
-                          bloc.numAvatar = 1;
-                        } else {
-                          bloc.numAvatar++;
-                        }
-                      },
-                      child: Image.asset(
-                        'assets/${bloc.numAvatar}.png',
-                        width: 120,
-                      ),
-                    ),
-                  ),
+                  // Consumer<LoginProvider>(
+                  //   builder: (context, bloc, child) => GestureDetector(
+                  //     onTap: () {
+                  //       if (bloc.numAvatar == 8) {
+                  //         bloc.numAvatar = 1;
+                  //       } else {
+                  //         bloc.numAvatar++;
+                  //       }
+                  //     },
+                  //     child: Image.asset(
+                  //       'assets/${bloc.numAvatar}.png',
+                  //       width: 120,
+                  //     ),
+                  //   ),
+                  // ),
                   TextInput(
                     controller: loginController.ctrlUsuario,
                     label: 'Usuario',
                     icon: Icons.person_outline,
                   ),
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  const TextInput(
+                  TextInput(
+                    controller: loginController.ctrlPassword,
                     label: 'Contraseña',
                     icon: Icons.lock_outline,
                   ),
                   const SizedBox(
-                    height: 30,
+                    height: 10,
                   ),
                   ElevatedButton(
-                    onPressed: () => Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const HomePage(),
-                        )),
+                    onPressed: () => loginController.login(context),
                     style: ButtonStyle(
                       foregroundColor: MaterialStateProperty.all(
                         Colors.black,
@@ -72,6 +68,45 @@ class LoginPage extends StatelessWidget {
                       ),
                     ),
                     child: const Text('Iniciar Sesión'),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Expanded(
+                        child: Divider(
+                          thickness: 2,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        child: Text(
+                          'o',
+                          style: Theme.of(context).textTheme.subtitle1,
+                        ),
+                      ),
+                      const Expanded(
+                        child: Divider(
+                          thickness: 2,
+                        ),
+                      )
+                    ],
+                  ),
+                  TextButton(
+                    onPressed: () => Navigator.push(
+                        context,
+                        CupertinoPageRoute(
+                          builder: (context) => const RegisterPage(),
+                        )),
+                    child: const Text(
+                      'Registrate',
+                      textScaleFactor: 1,
+                      style: TextStyle(
+                        fontSize: 15,
+                      ),
+                    ),
                   )
                 ],
               ),
@@ -82,5 +117,3 @@ class LoginPage extends StatelessWidget {
     );
   }
 }
-
-

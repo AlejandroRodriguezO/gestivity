@@ -7,11 +7,13 @@ class TextInput extends StatelessWidget {
     this.icon,
     required this.label,
     this.controller,
+    this.validator,
   }) : super(key: key);
 
   final IconData? icon;
   final String label;
   final TextEditingController? controller;
+  final String? Function(String?)? validator;
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +33,7 @@ class TextInput extends StatelessWidget {
           ),
         ),
       ),
+      validator: validator,
     );
   }
 }
